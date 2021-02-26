@@ -21,3 +21,6 @@ deployments/local*
 Networks.md
 deployments/fork*
 crytic-export
+yarn.lock
+.idea/
+package-lock.json

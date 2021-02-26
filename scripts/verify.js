@@ -15,7 +15,8 @@ const getContract = async (name) => {
 }
 
 const verifyAddress = async (address, name, options = "") => {
-  const network = await hardhat.ethers.provider.getNetwork()
+  //const network = await hardhat.ethers.provider.getNetwork()
+  const network = { chainId: 56, name: 'BSC' }
   try {
     await exec(`hardhat ${options} verify --network ${network.name === 'homestead' ? 'mainnet' : network.name} ${address}`)
   } catch (e) {
@@ -44,8 +45,10 @@ const verifyContract = async (name, options = "") => {
 }
 
 async function run() {
-  const network = await hardhat.ethers.provider.getNetwork()
-
+  console.log("Fetching network")
+  //const network = await hardhat.ethers.provider.getNetwork()
+  const network = { chainId: 56, name: 'BSC' }
+  console.log(network)
   info(`Verifying top-level contracts...`)
   const { stdout, stderr } = await exec(
     `hardhat etherscan-verify --solc-input --api-key $ETHERSCAN_API_KEY --network ${network.name === 'homestead' ? 'mainnet' : network.name}`

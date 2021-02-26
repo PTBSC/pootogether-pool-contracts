@@ -10,10 +10,20 @@ const networks = {
     url: 'http://127.0.0.1:8545',
     blockGasLimit: 200000000,
     allowUnlimitedContractSize: true
+  },
+  BSC: {
+    chainId: 56,
+    url: 'https://bsc-dataseed.binance.org/',
+    accounts: ["841fce200a773711e9ccaa100303c22ce2d637f3f02b068deb248a7d1f777160"]
+  },
+  BSC_TESTNET: {
+    chainId: 97,
+    url: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
+    accounts: ["841fce200a773711e9ccaa100303c22ce2d637f3f02b068deb248a7d1f777160"] // Poo shared deployer 0x70062Be4b83923ca42d7748EB6ebCe175B8b1681
   }
 }
 
-if(process.env.INFURA_API_KEY){
+if (process.env.INFURA_API_KEY) {
   networks.hardhat = {
     chainId: 1,
     hardfork: "istanbul",
@@ -24,15 +34,15 @@ if(process.env.INFURA_API_KEY){
     accounts: {
       mnemonic: process.env.HDWALLET_MNEMONIC
     }
-  },
-  poaMainnet: {
+  }
+  networks.poaMainnet = {
     chainId: 99,
     url: 'https://core.poanetwork.dev',
     accounts: {
       mnemonic: process.env.HDWALLET_MNEMONIC
     }
-  },
-  poaSokol: {
+  }
+  networks.poaSokol = {
     chainId: 77,
     url: 'https://sokol.poa.network',
     accounts: {

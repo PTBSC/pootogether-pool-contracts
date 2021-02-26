@@ -9,9 +9,9 @@ const DEPLOY = {
 }
 
 const PRIZE_POOLS = {
-  ropsten:  [''],
-  rinkeby:  [''],
-  kovan:    [''],
+  ropsten: [''],
+  rinkeby: [''],
+  kovan: [''],
 }
 
 const timestamp = (offsetSeconds) => ((new Date()).getTime() + offsetSeconds)
@@ -20,12 +20,14 @@ const balanceDripRatePerSecond = '0.00001'
 const volumeDripRatePerPeriod = '100'
 
 const getChainName = (chainId) => {
-  switch(chainId) {
+  switch (chainId) {
     case 1: return 'mainnet';
     case 3: return 'ropsten';
     case 4: return 'rinkeby';
     case 5: return 'goerli';
     case 42: return 'kovan';
+    case 56: return 'BSC';
+    case 97: return 'BSC_TESTNET';
     case 31337: return 'HardhatEVM';
     default: return 'unknown';
   }
@@ -36,13 +38,13 @@ async function main() {
 
 
   // const ERC20Mintable = require('../build/ERC20Mintable.json')
-const ERC20Mintable = await hre.artifacts.readArtifact("ERC20Mintable")
+  const ERC20Mintable = await hre.artifacts.readArtifact("ERC20Mintable")
 
-// const CompoundPrizePool = require('../build/CompoundPrizePool.json')
-const CompoundPrizePool = await hre.artifacts.readArtifact("CompoundPrizePool")
+  // const CompoundPrizePool = require('../build/CompoundPrizePool.json')
+  const CompoundPrizePool = await hre.artifacts.readArtifact("CompoundPrizePool")
 
-const MultipleWinners = await hre.artifacts.readArtifact("MultipleWinners")
-// const MultipleWinners = require('../build/MultipleWinners.json')
+  const MultipleWinners = await hre.artifacts.readArtifact("MultipleWinners")
+  // const MultipleWinners = require('../build/MultipleWinners.json')
 
   console.log("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
   console.log("PoolTogether Pool Contracts - Drip Tokens Script")

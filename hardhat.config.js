@@ -21,7 +21,7 @@ const optimizerEnabled = !process.env.OPTIMIZER_DISABLED
 const config = {
   solidity: {
     version: "0.6.12",
-    settings:{
+    settings: {
       optimizer: {
         enabled: optimizerEnabled,
         runs: 200
@@ -43,15 +43,19 @@ const config = {
       default: "0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e"
     },
     comptroller: {
-      1: '0x4027dE966127af5F015Ea1cfd6293a3583892668'
+      1: '0x4027dE966127af5F015Ea1cfd6293a3583892668',
+      97: '0x14008316f16A04E9dc70eADbDAC290308AC18186'
     },
     reserveRegistry: {
-      1: '0x3e8b9901dBFE766d3FE44B36c180A1bca2B9A295'
+      1: '0x3e8b9901dBFE766d3FE44B36c180A1bca2B9A295',
+      97: '0x1f6caa8140D43Fd2baaf239ea8926f901d9688A0'
     },
     rng: {
       42: RNGBlockhashKovan.address,
       4: RNGBlockhashRinkeby.address,
-      3: RNGBlockhashRopsten.address
+      3: RNGBlockhashRopsten.address,
+      56: '0xeDd591436169297c2B9A11ED55f71A33F4BcC36c',
+      97: '0x396488057eE55Fcabd58F245Ef944baFe9583D56'
     },
     adminAccount: {
       42: testnetAdmin,

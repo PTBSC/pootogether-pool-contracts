@@ -3,12 +3,14 @@ const { deploy1820 } = require('deploy-eip-1820')
 const debug = require('debug')('ptv3:deploy.js')
 
 const chainName = (chainId) => {
-  switch(chainId) {
+  switch (chainId) {
     case 1: return 'Mainnet';
     case 3: return 'Ropsten';
     case 4: return 'Rinkeby';
     case 5: return 'Goerli';
     case 42: return 'Kovan';
+    case 56: return 'BSC';
+    case 97: return 'BSC_TESTNET';
     case 31337: return 'HardhatEVM';
     default: return 'Unknown';
   }
@@ -27,8 +29,10 @@ module.exports = async (hardhat) => {
     comptroller,
     reserveRegistry
   } = await getNamedAccounts()
+
+  debug.enabled = true;
   const chainId = parseInt(await getChainId(), 10)
-  const isLocal = [1, 3, 4, 42, 77, 99].indexOf(chainId) == -1
+  const isLocal = [1, 3, 4, 42, 77, 56, 97, 99].indexOf(chainId) == -1
   // 31337 is unit testing, 1337 is for coverage
   const isTestEnvironment = chainId === 31337 || chainId === 1337
 
@@ -212,7 +216,7 @@ module.exports = async (hardhat) => {
     skipIfAlreadyDeployed: true
   })
 
-  
+
   let stakePrizePoolProxyFactoryResult
   if (isTestEnvironment && !harnessDisabled) {
     debug("\n  Deploying StakePrizePoolHarnessProxyFactory...")
@@ -222,7 +226,7 @@ module.exports = async (hardhat) => {
       skipIfAlreadyDeployed: true
     })
   }
-  else{
+  else {
     debug("\n  Deploying StakePrizePoolProxyFactory...")
     stakePrizePoolProxyFactoryResult = await deploy("StakePrizePoolProxyFactory", {
       from: deployer,
