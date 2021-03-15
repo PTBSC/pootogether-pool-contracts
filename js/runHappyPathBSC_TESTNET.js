@@ -159,7 +159,7 @@ async function main() {
     deployer,
     toWei('1'),
     ticket,
-    '0x0000000000000000000000000000000000000000')
+    '0x0000000000000000000000000000000000000000', {gasLimit: 20000000})
 
   console.log(`Deposit for 1 unit => ${tx.hash}`)
   console.log("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
