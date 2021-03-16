@@ -72,8 +72,8 @@ async function main() {
     ticketSymbol: "TICK",
     sponsorshipName: "Sponsorship",
     sponsorshipSymbol: "SPON",
-    ticketCreditLimitMantissa: toWei('0.1'),
-    ticketCreditRateMantissa: toWei('0.001'),
+    ticketCreditLimitMantissa: toWei('0.01'), // max withdrawal fee of 1%
+    ticketCreditRateMantissa: toWei('0.000000005787037037'), // 10 day cooldown for 1% fee
     numberOfWinners: 1
   }
   let prizePoolConfig = {
