@@ -42,6 +42,14 @@ const config = {
     pool: {
       default: "0x07c03e176FB92fD7C932880b8cdFd09FC9834592"
     },
+    vBUSDTokenAddr: {
+      56: '0x95c78222B3D6e262426483D42CfA53685A67Ab9D',
+      97: '0x08e0A5575De71037aE36AbfAfb516595fE68e5e4'
+    },
+    BUSDTokenAddr: {
+      56: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+      97: '0x8301f2213c0eed49a7e28ae4c3e91722919b8b47'
+    },
     comptroller: {
       1: '0x4027dE966127af5F015Ea1cfd6293a3583892668',
       97: '0x1D68110AB521597ed0D78Bf7e60E5040306D8740'

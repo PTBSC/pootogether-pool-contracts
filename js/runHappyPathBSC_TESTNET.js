@@ -45,7 +45,7 @@ async function main() {
   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
   const { getNamedAccounts, getChainId, ethers } = hardhat
-  const { deployer, rng } = await getNamedAccounts()
+  const { deployer, rng, pool, BUSDTokenAddr, vBUSDTokenAddr } = await getNamedAccounts()
   const wallet = [deployer]
   const chainId = parseInt(await getChainId(), 10)
   const chainName = getChainName(chainId)
@@ -60,17 +60,22 @@ async function main() {
   console.log(`\n  Loading PoolWithMultipleWinnersBuilder from address: "${pwmwbArtifacts.address}"...`)
   const signer = await hardhat.ethers.provider.getSigner(deployer)
   const pwmwb = new hardhat.ethers.Contract(pwmwbArtifacts.address, pwmwbArtifacts.abi, signer)
-  const vBUSDToken = await ethers.getContractAt('IERC20Upgradeable', '0x08e0A5575De71037aE36AbfAfb516595fE68e5e4', signer)
-  const BUSDToken = await ethers.getContractAt('IERC20Upgradeable', '0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47', signer)
+  const vBUSDToken = await ethers.getContractAt('IERC20Upgradeable', vBUSDTokenAddr, signer)
+  const BUSDToken = await ethers.getContractAt('IERC20Upgradeable', BUSDTokenAddr, signer)
   
+  const isTestnet = chainId != 56
 
+  console.log(`Testnet configuration: ${isTestnet}`)
   // set params
   const now = () => (new Date()).getTime() / 1000 | 0
+  const week = 3600 * 24 * 7
+
+  const prizePeriodSeconds = isTestnet ? 1000 : week
 
   let multipleWinnersConfig = {
     rngService: rng,
     prizePeriodStart: now(),
-    prizePeriodSeconds: 1000,
+    prizePeriodSeconds: prizePeriodSeconds,
     ticketName: "Poo Venus BUSD",
     ticketSymbol: "PvBUSD",
     sponsorshipName: "SponsorPoo",
@@ -130,7 +135,7 @@ async function main() {
 
   const vbusdPrizeStrategyArtifacts = require(`../abis/MultipleWinners.json`)
   const vbusdPrizeStrategy = new hardhat.ethers.Contract(prizePoolStrategy, vbusdPrizeStrategyArtifacts, signer)
-  const pooToken = await ethers.getContractAt('IERC20Upgradeable', '0xeA5633dd173c9BD34570Ceacc73Ea976711Fe26f', signer)
+  const pooToken = await ethers.getContractAt('IERC20Upgradeable', pool, signer)
 
   let ticket = await vbusdPrizeStrategy.ticket()
   // Create token faucet
