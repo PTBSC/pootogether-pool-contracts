@@ -40,22 +40,22 @@ const config = {
       default: 0
     },
     pool: {
-      default: "0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e"
+      default: "0x07c03e176FB92fD7C932880b8cdFd09FC9834592"
     },
     comptroller: {
       1: '0x4027dE966127af5F015Ea1cfd6293a3583892668',
-      97: '0x14008316f16A04E9dc70eADbDAC290308AC18186'
+      97: '0x1D68110AB521597ed0D78Bf7e60E5040306D8740'
     },
     reserveRegistry: {
       1: '0x3e8b9901dBFE766d3FE44B36c180A1bca2B9A295',
-      97: '0x1f6caa8140D43Fd2baaf239ea8926f901d9688A0'
+      97: '0xEF1A31406b33C2F2F80e3520441dd6bf36c733e9'
     },
     rng: {
       42: RNGBlockhashKovan.address,
       4: RNGBlockhashRinkeby.address,
       3: RNGBlockhashRopsten.address,
       56: '0xeDd591436169297c2B9A11ED55f71A33F4BcC36c',
-      97: '0x396488057eE55Fcabd58F245Ef944baFe9583D56'
+      97: '0x85Fce8834f5631cadbBCdDCb22feDed1200dB160'
     },
     adminAccount: {
       42: testnetAdmin,
