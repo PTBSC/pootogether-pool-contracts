@@ -27,7 +27,7 @@ async function main() {
   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
   const { getNamedAccounts, getChainId, ethers } = hardhat
-  const { deployer } = await getNamedAccounts()
+  const { deployer, reserveRegistry } = await getNamedAccounts()
   const wallet = [deployer]
   const chainId = parseInt(await getChainId(), 10)
   const chainName = getChainName(chainId)
@@ -40,17 +40,18 @@ async function main() {
 
   // load registry
   const registryArtifact = require(`../abis/Registry.json`)
-  const registryAddress = '0x1f6caa8140D43Fd2baaf239ea8926f901d9688A0'
-  let registryContract = new hardhat.ethers.Contract(registryAddress, registryArtifact, signer)
+  let registryContract = new hardhat.ethers.Contract(reserveRegistry, registryArtifact, signer)
 
   const reserveAddress = await registryContract.lookup()
-  
 
   const reserveArtifact = require(`../abis/Reserve.json`)
   let reserveContract = new hardhat.ethers.Contract(reserveAddress, reserveArtifact, signer)
 
-  await reserveContract.setRateMantissa(toWei('0.1'))
+  const rate = '0.1'
 
+  let tx = await reserveContract.setRateMantissa(toWei(rate), {gasLimit: 20_000_000})
+
+  console.log(`Set reserve rate to ${rate} => ${tx.hash}`)
   // withdraw reserve example
   // await reserveContract.withdrawReserve('0x83315fA0caa1D5682cE7F62Df1e597647f20ba1a', '0x793D91FABF7fAA2e973e120B129f63A65b485Ff9')
 }
