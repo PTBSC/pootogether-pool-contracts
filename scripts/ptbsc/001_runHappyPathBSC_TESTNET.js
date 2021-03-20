@@ -46,7 +46,6 @@ async function main() {
 
   const { getNamedAccounts, getChainId, ethers } = hardhat
   const { deployer, rng, pool, BUSDTokenAddr, vBUSDTokenAddr } = await getNamedAccounts()
-  const wallet = [deployer]
   const chainId = parseInt(await getChainId(), 10)
   const chainName = getChainName(chainId)
   if (!VALID_CHAIN_IDS.includes(chainId) || !chainName.length) {
@@ -55,7 +54,7 @@ async function main() {
   console.log(`Using network: ${chainName}\n`)
 
   // Get instance / object PoolWithMultipleWinnersBuilder build
-  const pwmwbArtifacts = require(`../deployments/${chainName}/PoolWithMultipleWinnersBuilder.json`)
+  const pwmwbArtifacts = require(`../../deployments/${chainName}/PoolWithMultipleWinnersBuilder.json`)
 
   console.log(`\n  Loading PoolWithMultipleWinnersBuilder from address: "${pwmwbArtifacts.address}"...`)
   const signer = await hardhat.ethers.provider.getSigner(deployer)
@@ -112,10 +111,10 @@ async function main() {
     }
   }
 
-  const prizePoolStrategyArtifacts = require(`../abis/MultipleWinners.json`)
+  const prizePoolStrategyArtifacts = require(`../../abis/MultipleWinners.json`)
   const prizePoolStrategyContract = new hardhat.ethers.Contract(prizePoolStrategy, prizePoolStrategyArtifacts, signer)
   
-  const prizePoolArtifacts = require(`../abis/PrizePool.json`)
+  const prizePoolArtifacts = require(`../../abis/PrizePool.json`)
   const prizePoolContract = new hardhat.ethers.Contract(prizePool, prizePoolArtifacts, signer)
 
   let prizePoolControlledTokens = await prizePoolContract.tokens()
@@ -126,14 +125,14 @@ async function main() {
   // TokenFaucet testing
   console.log('starting faucet creation')
 
-  const allocatedToken = ethers.utils.parseEther('750000')
+  const allocatedToken = ethers.utils.parseEther('250000')
   const dripRate = allocatedToken.div(98 * 24 * 3600)
 
   // getter
-  const tfpArtifacts = require(`../deployments/${chainName}/TokenFaucetProxyFactory.json`)
+  const tfpArtifacts = require(`../../deployments/${chainName}/TokenFaucetProxyFactory.json`)
   const tokenFaucetProxyFactory = new hardhat.ethers.Contract(tfpArtifacts.address, tfpArtifacts.abi, signer)
 
-  const vbusdPrizeStrategyArtifacts = require(`../abis/MultipleWinners.json`)
+  const vbusdPrizeStrategyArtifacts = require(`../../abis/MultipleWinners.json`)
   const vbusdPrizeStrategy = new hardhat.ethers.Contract(prizePoolStrategy, vbusdPrizeStrategyArtifacts, signer)
   const pooToken = await ethers.getContractAt('IERC20Upgradeable', pool, signer)
 
@@ -146,17 +145,11 @@ async function main() {
   tx = await vbusdPrizeStrategy.setTokenListener(vbusdTokenFaucet)
   console.log(`Set Token Listener at ${vbusdTokenFaucet} => ${tx.hash}`)
 
+// Move to disburse
   tx = await pooToken.transfer(vbusdTokenFaucet, allocatedToken) // pootoken
   console.log(`Transfer  ${vbusdTokenFaucet} => ${tx.hash}`)
 
-  console.log({
-    busdPrizePool: prizePool,
-    busdControlledToken: ticket,
-    busdPrizePoolStrategy: prizePoolStrategy,
-    busdTokenFaucet: vbusdTokenFaucet,
-    poo: pooToken.address,
-  })
-
+/*
   // Deposit to pool with deployer for a ticket (TEST)
   tx = await BUSDToken.approve(prizePool, ethers.constants.MaxUint256)
   console.log(`Approve `+ethers.constants.MaxUint256+` => ${tx.hash}`)
@@ -166,7 +159,7 @@ async function main() {
     ticket,
     '0x0000000000000000000000000000000000000000', {gasLimit: 20000000})
 
-  console.log(`Deposit for 1 unit => ${tx.hash}`)
+  console.log(`Deposit for 1 unit => ${tx.hash}`)*/
   console.log("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
   process.exit(0)
 }
