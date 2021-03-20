@@ -71,12 +71,12 @@ async function main() {
     rngService: rng,
     prizePeriodStart: now(),
     prizePeriodSeconds: 1000,
-    ticketName: "PooBUSD",
-    ticketSymbol: "PoBUSD",
+    ticketName: "Poo Venus BUSD",
+    ticketSymbol: "PvBUSD",
     sponsorshipName: "SponsorPoo",
     sponsorshipSymbol: "SPOO",
-    ticketCreditLimitMantissa: toWei('0.1'),
-    ticketCreditRateMantissa: toWei('0.001'),
+    ticketCreditLimitMantissa: toWei('0.01'),
+    ticketCreditRateMantissa: toWei('0.000000005787037037'), // 10 day cooldown for 1% fee
     numberOfWinners: 1
   }
   let prizePoolConfig = {
@@ -152,7 +152,7 @@ async function main() {
     poo: pooToken.address,
   })
 
-  // Deposit to pool with deployer for a ticket
+  // Deposit to pool with deployer for a ticket (TEST)
   tx = await BUSDToken.approve(prizePool, ethers.constants.MaxUint256)
   console.log(`Approve `+ethers.constants.MaxUint256+` => ${tx.hash}`)
   tx = await prizePoolContract.depositTo(
