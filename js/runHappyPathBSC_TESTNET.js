@@ -45,7 +45,7 @@ async function main() {
   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
   const { getNamedAccounts, getChainId, ethers } = hardhat
-  const { deployer } = await getNamedAccounts()
+  const { deployer, rng } = await getNamedAccounts()
   const wallet = [deployer]
   const chainId = parseInt(await getChainId(), 10)
   const chainName = getChainName(chainId)
@@ -68,7 +68,7 @@ async function main() {
   const now = () => (new Date()).getTime() / 1000 | 0
 
   let multipleWinnersConfig = {
-    rngService: '0x396488057eE55Fcabd58F245Ef944baFe9583D56',
+    rngService: rng,
     prizePeriodStart: now(),
     prizePeriodSeconds: 1000,
     ticketName: "PooBUSD",
