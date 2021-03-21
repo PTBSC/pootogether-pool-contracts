@@ -81,7 +81,7 @@ async function main() {
     sponsorshipSymbol: "SPOO",
     ticketCreditLimitMantissa: toWei('0.01'),
     ticketCreditRateMantissa: toWei('0.000000005787037037'), // 10 day cooldown for 1% fee
-    numberOfWinners: 1
+    numberOfWinners: 3
   }
   let prizePoolConfig = {
     cToken: vBUSDToken.address, //vBUSD TESTNET
