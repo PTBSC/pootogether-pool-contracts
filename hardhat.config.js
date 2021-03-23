@@ -40,7 +40,9 @@ const config = {
       default: 0
     },
     pool: {
-      default: "0x07c03e176FB92fD7C932880b8cdFd09FC9834592"
+      default: "0x07c03e176FB92fD7C932880b8cdFd09FC9834592",
+      56: '0x0B20198aae954782848C9D019370C771245f0d48',
+      97: '0x07c03e176FB92fD7C932880b8cdFd09FC9834592'
     },
     vBUSDTokenAddr: {
       56: '0x95c78222B3D6e262426483D42CfA53685A67Ab9D',
@@ -51,11 +53,13 @@ const config = {
       97: '0x8301f2213c0eed49a7e28ae4c3e91722919b8b47'
     },
     comptroller: {
-      1: '0x4027dE966127af5F015Ea1cfd6293a3583892668',
+      1: '',
+      56: '0xCA8Bd35d14A96904Ae841Abb737fa2f786412f76',
       97: '0x1D68110AB521597ed0D78Bf7e60E5040306D8740'
     },
     reserveRegistry: {
-      1: '0x3e8b9901dBFE766d3FE44B36c180A1bca2B9A295',
+      1: '',
+      56: '0xe3Fef3AE02353b6c4b7C883d757d5e1caEc1D17c',
       97: '0xEF1A31406b33C2F2F80e3520441dd6bf36c733e9'
     },
     rng: {
