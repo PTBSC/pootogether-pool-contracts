@@ -14,12 +14,12 @@ const networks = {
   BSC: {
     chainId: 56,
     url: 'https://bsc-dataseed.binance.org/',
-    accounts: ["841fce200a773711e9ccaa100303c22ce2d637f3f02b068deb248a7d1f777160"]
+    accounts: [""]
   },
   BSC_TESTNET: {
     chainId: 97,
     url: 'https://data-seed-prebsc-2-s1.binance.org:8545/',
-    accounts: ["841fce200a773711e9ccaa100303c22ce2d637f3f02b068deb248a7d1f777160"] // Poo shared deployer 0x70062Be4b83923ca42d7748EB6ebCe175B8b1681
+    accounts: [""] 
   }
 }
 
