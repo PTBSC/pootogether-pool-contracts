@@ -309,6 +309,71 @@ abstract contract PrizePool is PrizePoolInterface, YieldSource, OwnableUpgradeab
 
     emit Deposited(operator, to, controlledToken, amount, referrer);
   }
+  /// @notice Deposit assets into the Prize Pool in exchange for tokens
+  /// @param to The address receiving the newly minted tokens
+  /// @param controlledToken The address of the type of token the user is minting
+  /// @param referrer The referrer of the deposit
+  function depositToBNB(
+    address to,
+    address controlledToken,
+    address referrer
+  )
+    external override
+    onlyControlledToken(controlledToken)
+    canAddLiquidity(amount)
+    nonReentrant
+    payable
+  {
+    address operator = msg.sender;
+    uint256 amount = msg.value;
+
+    // WrappedBNB.withdraw
+
+    _mint(to, amount, controlledToken, referrer);
+
+    _token().safeTransferFrom(operator, address(this), amount);
+    _supply(amount);
+
+    emit Deposited(operator, to, controlledToken, amount, referrer);
+  }
+
+  /// @notice Withdraw assets from the Prize Pool instantly.  A fairness fee may be charged for an early exit.
+  /// @param from The address to redeem tokens from.
+  /// @param amount The amount of tokens to redeem for assets.
+  /// @param controlledToken The address of the token to redeem (i.e. ticket or sponsorship)
+  /// @param maximumExitFee The maximum exit fee the caller is willing to pay.  This should be pre-calculated by the calculateExitFee() fxn.
+  /// @return The actual exit fee paid
+  function withdrawInstantlyBNBFrom(
+    address from,
+    uint256 amount,
+    address controlledToken,
+    uint256 maximumExitFee
+  )
+    external override
+    nonReentrant
+    onlyControlledToken(controlledToken)
+    returns (uint256)
+  {
+    (uint256 exitFee, uint256 burnedCredit) = _calculateEarlyExitFeeLessBurnedCredit(from, controlledToken, amount);
+    require(exitFee <= maximumExitFee, "PrizePool/exit-fee-exceeds-user-maximum");
+
+    //TODO withdraw BNB
+    // burn the credit
+    _burnCredit(from, controlledToken, burnedCredit);
+
+    // burn the tickets
+    ControlledToken(controlledToken).controllerBurnFrom(_msgSender(), from, amount);
+
+    // redeem the tickets less the fee
+    uint256 amountLessFee = amount.sub(exitFee);
+    uint256 redeemed = _redeem(amountLessFee);
+
+    _token().safeTransfer(from, redeemed);
+
+    emit InstantWithdrawal(_msgSender(), from, controlledToken, amount, redeemed, exitFee);
+
+    return exitFee;
+  }
 
   /// @notice Withdraw assets from the Prize Pool instantly.  A fairness fee may be charged for an early exit.
   /// @param from The address to redeem tokens from.

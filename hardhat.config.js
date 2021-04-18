@@ -48,6 +48,14 @@ const config = {
       56: '0x95c78222B3D6e262426483D42CfA53685A67Ab9D',
       97: '0x08e0A5575De71037aE36AbfAfb516595fE68e5e4'
     },
+    vBNBTokenAddr: {
+      56: '0xA07c5b74C9B40447a954e1466938b865b6BBea36',
+      97: '0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c'
+    },
+    BNBTokenAddr: {
+      56: '0x094616f0bdfb0b526bd735bf66eca0ad254ca81f',
+      97: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+    },
     BUSDTokenAddr: {
       56: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
       97: '0x8301f2213c0eed49a7e28ae4c3e91722919b8b47'
